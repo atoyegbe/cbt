@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class CBTUser(models.Model):
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateField(null=True)
     first_name = models.CharField(max_length=255, blank=False, null=False)
     last_name = models.CharField(max_length=255, blank=False, null=False)
     created_at = models.DateTimeField(auto_now_add=True)
