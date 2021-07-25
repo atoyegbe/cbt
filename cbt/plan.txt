@@ -1,0 +1,39 @@
+Computer Based Test
+
+Student
+    username / user ID
+    first name
+    last name
+    date of birth
+
+Exam Manager
+    username / user ID
+    first name
+    last name
+    date of birth
+
+Exam
+    exam ID
+    title
+    description
+    Exam Manager
+    test_id
+
+Question
+    question id
+    exam ID
+    question description
+    question Options
+    correct Option's ID
+
+Options
+    option_id
+    question_id
+    option description
+
+Result
+    result ID
+    username/user ID
+    exam ID
+
+
