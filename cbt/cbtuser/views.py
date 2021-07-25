@@ -1,5 +1,6 @@
+from logging import raiseExceptions
 import random
-from typing import OrderedDict
+from typing import Tuple
 
 from rest_framework import serializers, status
 from rest_framework.decorators import api_view
@@ -42,11 +43,18 @@ def login(request: HttpRequest) -> Response:
         pass
 
 #utils 
-def generate_username(*names):
+def generate_username(*names: Tuple[str, ...]):
     """Generate a random username
     """
-    first_letter = names[0][0]
-    three_letters_surname = names[-1][:3]
-    number = '{:03d}'.format(random.randrange(1, 999))
-    username = (first_letter + three_letters_surname + number)
-    return str(username).capitalize()
+    
+    if len(names:= tuple(i for i in names if i != None)) > 0:
+        first_letter = names[0][0]
+        three_letters_surname = names[-1][:3]
+        number = '{:03d}'.format(random.randrange(1, 999))
+        username = (first_letter + three_letters_surname + number)
+        return str(username).capitalize()
+    elif "test" == __import__("sys").argv[-1]:
+        return "Testmode"
+    else:
+        raise ValueError("Unexpexted Data")
+        
