@@ -22,3 +22,8 @@ class CBTUserSerializer(serializers.ModelSerializer):
         model = CBTUser
         fields = "__all__"
         
+
+class CBTLoginSerializer(serializers.Serializer):
+
+    username = serializers.CharField(label="username", max_length=100)
+    password = serializers.CharField(label="password", max_length=100)
