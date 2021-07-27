@@ -1,7 +1,7 @@
 import random
 from typing import Tuple
 
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -44,7 +44,7 @@ def create(request: HttpRequest) -> Response:
 @api_view(['POST'])
 @csrf_exempt
 def login_cbtuser(request: HttpRequest) -> Response:
-        """ Log a user on the system 
+        """Log a user on the system 
         :param request: HttpRequest
         :return: Response
         """

@@ -21,9 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-from dotenv import load_dotenv
 
-A= load_dotenv()
 SECRET_KEY = 'django-insecure-s&-+f&iuuzq%+c$n7vr-=w20qm!gzs0!5tn*5=4t73n&&%sizg'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -45,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'cbtuser.apps.CbtuserConfig',
+    'exam.apps.ExamConfig',
 ]
 
 MIDDLEWARE = [
@@ -140,3 +139,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# [pytest]
+DJANGO_SETTINGS_MODULE = 'cbt.settings'
+python_files = 'tests.py test_*.py *_tests.py'

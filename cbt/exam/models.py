@@ -1,4 +1,3 @@
-from cbt.cbtuser.models import CBTUser
 import uuid
 
 
@@ -13,7 +12,7 @@ class Exam(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.TextField(max_length=500, blank=False, null=False)
     description = models.TextField(max_length=1500, blank=False, null=False)
-    exam_manager = models.ForeignKey(CBTUser, on_delete=models.SET_NULL)
+    exam_manager = models.ForeignKey(CBTUser, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
