@@ -9,7 +9,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from django.http import HttpRequest
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from django.contrib.auth.decorators import login_required
 
@@ -44,7 +44,7 @@ def create(request: HttpRequest) -> Response:
 @api_view(['POST'])
 @csrf_exempt
 def login_cbtuser(request: HttpRequest) -> Response:
-        """Log a user on the system 
+        """ Log a user on the system 
         :param request: HttpRequest
         :return: Response
         """
