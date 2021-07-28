@@ -84,6 +84,8 @@ def delete_exam(request: HttpRequest, slug: str) -> Response:
     try:
         exam = Exam.objects.get(pk=slug)
         exam.delete()
+        #TODO: Delete questions and results for this exam
+        #       Make use of django signals to notify the other decoupled apps
         return Response(status=status.HTTP_200_OK)
     except Exam.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
