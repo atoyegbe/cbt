@@ -1,5 +1,9 @@
-from cbtuser.models import CBTUser
 import json
+from copy import copy
+
+from django.http import response
+from django.test.testcases import TestCase
+from cbtuser.models import CBTUser
 
 from faker import Faker
 from django.contrib.auth.models import User
@@ -79,3 +83,46 @@ class ReadExamTest(APITestCase):
 
     def tearDown(self) -> None:
         self.exam.delete()
+
+
+class UpdateExamTest(TestCase):
+    
+    def setUp(self) -> None:
+        self.valid_payload = {
+            "title" : "Computer Science 101 - B",
+            "description" : faker.text(1400),
+            "exam_code" : "CSC 102"            
+        }
+        self.invalid_payload = {
+            "title" : "Computer Science 101 - B",
+            "description" : faker.text(2400),
+            "exam_code" : "CSC 102"            
+        }
+        self.client = APIClient()
+        self.user = User.objects.create_user(username="diaP123", email=valid_payload["email"], password=valid_payload["password"])
+        self.user.save()
+        self.token = Token.objects.get_or_create(user=self.user)
+        self.client.credentials(HTTP_AUTHORIZATION = "Token " + str(self.token[0]))
+        self.exam = Exam.objects.create(
+            title=self.valid_payload['description'],
+            description=self.valid_payload['description'],
+            exam_code= self.valid_payload['exam_code']
+        )
+        self.exam.save()
+        self.path = f"/api/v1/exam/update/{str(self.exam.id)}/"
+
+    def test_valid_update(self):
+        response = self.client.put(
+            path = self.path,
+            data = json.dumps(self.valid_payload),
+            content_type = 'application/json',
+        )
+        self.assertTrue(response.status_code, status.HTTP_200_OK)
+
+    def test_invalid_update(self):
+        response = self.client.put(
+            path = self.path,
+            data = json.dumps(self.invalid_payload),
+            content_type = 'application/json',
+        )
+        self.assertTrue(response.status_code, status.HTTP_400_BAD_REQUEST)

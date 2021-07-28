@@ -24,7 +24,6 @@ def create(request: HttpRequest) -> Response:
         :param request: HttpRequest
         :return: Response
     """
-    # create a User object
     user = User.objects.create_user(
         username = generate_username(request.data.get("first_name"), 
                                     request.data.get("last_name")),
