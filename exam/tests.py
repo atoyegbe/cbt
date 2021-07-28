@@ -54,6 +54,7 @@ class CreateExamTest(APITestCase):
         self.user.delete()
         self.cbtuser.delete()
 
+
 class ReadExamTest(APITestCase):
 
     def setUp(self) -> None:
@@ -76,6 +77,5 @@ class ReadExamTest(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
-    # def tearDown(self) -> None:
-    #     ...
-
+    def tearDown(self) -> None:
+        self.exam.delete()
