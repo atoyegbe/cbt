@@ -1,4 +1,5 @@
 import json
+from uuid import uuid4
 from copy import copy
 
 from django.http import response
@@ -77,7 +78,7 @@ class ReadExamTest(APITestCase):
 
 
     def test_invalid_read_exam(self) -> None:
-        response = self.client.get(path = f"/api/v1/exam/read/{str(__import__('uuid').uuid4())}/")
+        response = self.client.get(path = f"/api/v1/exam/read/{str(uuid4())}/")
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
 
@@ -126,3 +127,31 @@ class UpdateExamTest(TestCase):
             content_type = 'application/json',
         )
         self.assertTrue(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class DeleteExamTest(APITestCase):
+
+    def setUp(self) -> None:
+        
+        self.title = "Art and Science 401"
+        self.exam_code = "AS 401"
+        self.description = faker.text(1400)
+        self.user = User.objects.create_user(username="diaP123", email=valid_payload["email"], password=valid_payload["password"])
+        self.user.save()
+        self.token = Token.objects.get_or_create(user=self.user)
+        self.exam = Exam.objects.create(title=self.title, description=self.description, exam_code= self.exam_code)
+        self.exam.save()
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION = "Token " + str(self.token[0]))
+
+    def test_valid_delete_exam(self) -> None:
+        response = self.client.delete(path = f"/api/v1/exam/delete/{str(self.exam.id)}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_invalid_delete_exam(self) -> None:
+        response = self.client.delete(path = f"/api/v1/exam/delete/{str(uuid4())}/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    def tearDown(self) -> None:
+        self.exam.delete()

@@ -74,3 +74,17 @@ def update_exam(request: HttpRequest, slug: str) -> Response:
 
 
 # Delete Exam
+@api_view(['DELETE'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+@csrf_protect
+def delete_exam(request: HttpRequest, slug: str) -> Response:
+    """Delete exam and related info"""
+    
+    try:
+        exam = Exam.objects.get(pk=slug)
+        exam.delete()
+        return Response(status=status.HTTP_200_OK)
+    except Exam.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
