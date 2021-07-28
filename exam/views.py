@@ -14,7 +14,6 @@ from .models import Exam
 from .serializers import ExamSerializer
 from cbtuser.models import CBTUser
 
-# create Exam
 
 @api_view(['POST'])
 @authentication_classes([TokenAuthentication])
@@ -39,5 +38,19 @@ def create_exam(request: HttpRequest) -> Response:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
-# Read Exam
+@api_view(['GET'])
+def read_exam(request: HttpRequest, slug: str) -> Response:
+    """Get exam info"""
+
+    try:
+        exam = Exam.objects.get(pk=slug)
+    except Exam.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    serializer = ExamSerializer(exam)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 # Delete Exam

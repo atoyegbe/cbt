@@ -1,14 +1,7 @@
 import uuid
 
 from django.db import models
-
-# try:
-#     import sys
-#     temp = sys.path
-#     sys.path.append("..")
-#     from cbtuser.models import CBTUser
-# except Exception("Could not import CBTUser"):
-#     sys.exit()
+from cbtuser.models import CBTUser
 
 
 class Exam(models.Model):
@@ -17,7 +10,7 @@ class Exam(models.Model):
     title = models.TextField(max_length=500, blank=False, null=False)
     description = models.TextField(max_length=1500, blank=False, null=False)
     exam_code = models.CharField(max_length=15, blank=False, null=False, default="NULL")
-    exam_manager = models.ForeignKey("cbtuser.CBTUser", on_delete=models.SET_NULL, null=True)
+    exam_manager = models.ForeignKey(CBTUser, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

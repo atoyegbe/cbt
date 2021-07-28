@@ -9,15 +9,18 @@ from rest_framework import status
 from rest_framework.authtoken.models import Token
 
 from pretestrunner import valid_payload
+from exam.models import Exam
 
+faker = Faker()
 
 class CreateExamTest(APITestCase):
 
     def setUp(self) -> None:
-        self.faker = Faker()
+        
         self.valid_payload = {
             "title" : "Computer Science 101",
-            "description" : self.faker.text(1400)
+            "description" : faker.text(1400),
+            "exam_code" : "CSC 101"            
         }
         self.invalid_payload = {"title" : "Artificial Neural Network"}
         self.client = APIClient()
@@ -48,4 +51,31 @@ class CreateExamTest(APITestCase):
 
 
     def tearDown(self) -> None:
-        ...
+        self.user.delete()
+        self.cbtuser.delete()
+
+class ReadExamTest(APITestCase):
+
+    def setUp(self) -> None:
+        
+        self.title = "Art and Science 401"
+        self.exam_code = "AS 401"
+        self.description = faker.text(1400)
+        
+        self.client = APIClient()
+        self.exam = Exam.objects.create(title=self.title, description=self.description, exam_code= self.exam_code)
+        self.exam.save()
+        
+    def test_valid_read_exam(self) -> None:
+        response = self.client.get(path = f"/api/v1/exam/read/{str(self.exam.id)}/")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+    def test_invalid_read_exam(self) -> None:
+        response = self.client.get(path = f"/api/v1/exam/read/{str(__import__('uuid').uuid4())}/")
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+
+    # def tearDown(self) -> None:
+    #     ...
+

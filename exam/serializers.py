@@ -9,5 +9,5 @@ class ExamSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Exam
-        fields = ('id', 'title', 'description')
+        fields = ('id', 'title', 'description', 'exam_code')
         # fields = '__all__'
