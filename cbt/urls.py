@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/user/', include('cbtuser.urls')),
     path('api/v1/exam/', include('exam.urls')),
+    path('api/v1/question/', include('question.urls')),
     # path('api-token-auth/', views.obtain_auth_token),
 ]

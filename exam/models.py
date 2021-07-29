@@ -17,5 +17,5 @@ class Exam(models.Model):
     class Meta:
         ordering = ['created_at']
 
-    def __str__(self):
-        return f" {self.title} - {self.exam_manager}"
+    def __str__(self) -> str:
+        return f"Exam: {self.title} - {self.exam_manager}"

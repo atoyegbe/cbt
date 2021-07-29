@@ -13,5 +13,5 @@ class Option(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-    def __str__(self) -> None:
+    def __str__(self) -> str:
         return f"<Option: {self.id}>"
